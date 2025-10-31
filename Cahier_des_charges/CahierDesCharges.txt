@@ -1,0 +1,35 @@
+Je souhaite réaliser ( non pas utiliser un programme existant) avec ta collaboration un interpréteur/compilateur forth sur un esp32-S3.
+Pour cela je souhaite partir de rien. Ce projet a deux objectifs  - pédagogique ( amélioration de mes connaissances) - utile les projets suivant seront fait à partir de ce langage.
+1) Quelques informations pour ce projet:
+   -partir de rien il faut utiliser l'assembleur de l'esp32-S3 (Tensilica Xtensa LX7 )
+   -le cross-assemblage se fera sur windows 10
+     -- donne moi la procédure pour avoir une chaine de traitement automatique ( make ) soit
+	   ---directement sous windows
+	   ---en utilisant wsl ( mais je ne me rappelle plus du pass superviseur ! on peut le réinitialiser )
+   -les échanges de fichier se feront sur github https://github.com/GuyTitt/Esp32-Forth
+   -Pour faciliter les tests nous utiliserons le simulateur wokwi gratuit il peut venir chercher les binaires sur github.
+   
+2) peux tu compléter en améliorant:
+  Vocabulaire minimal:
+    Opérateurs mathématiques : + - * / mod abs negate
+    opérateurs logiques : and or xor not
+    flux et Boucles : while  if then else
+    pile : dup swap drop over rot
+    entrée sortie : key emit . .s
+	chaine : "
+	commentaire : ( ) \
+  Vocabulaire spécifique à l'esp32:
+    timers: start stop read
+    GPIO: get set input output
+	analogique : read set
+    Interruptions : enable disable clear
+    SPDIFF : read write
+	network : 
+    
+ 3) j'ai commencé à faire ce premier tri, perfectionne le, pour le Vocabulaire minimal, ne retient que les mots principaux de "forth", ceux qui ne peuvent être traduit en d'autres mots "forth". nous appelleront la collection de ces mots le vocabulaire minimal ( il doit être le plus réduit possible) et être écrit en assembleur et avoir l'emprunte la plus faible et la plus rapide.
+ 4) Les autres mots (vocabulaire usuel et spécifique ) seront obtenus (macro) à partir du vocabulaire minimal. Il seront dans des fichiers spiff interprétés au lancement du programme s'il sont présent sur le disque. Si une pin spécifiée est  à 0 alors les fichiers vocabulaires ne seront pas lu et interprétés, cela sera utilisé pour faire des tests.
+ 
+ 5) Je pense ne rien avoir oublié mais je pense que ce cahier des charges initial évoluera au fur et à mesure de la réalisation de ce projet.
+ 6) Commencons en installant la chaine de production sur windows et en verifiant que l'on sait faire clignoter la led gpio 2 à 1 hz 
+ Pour faire l'essai initial utilisons le dossier prerequis 
+ 7) à moins que tu ais une meilleure méthode à me proposer. je suis preneur de toute idée.
