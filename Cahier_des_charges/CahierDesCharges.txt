@@ -26,7 +26,7 @@ Pour cela je souhaite partir de rien. Ce projet a deux objectifs  - pédagogique
     SPDIFF : read write
 	network : 
     
- 3) j'ai commencé à faire ce premier tri, perfectionne le, pour le Vocabulaire minimal, ne retient que les mots principaux de "forth", ceux qui ne peuvent être traduit en d'autres mots "forth". nous appelleront la collection de ces mots le vocabulaire minimal ( il doit être le plus réduit possible) et être écrit en assembleur et avoir l'emprunte la plus faible et la plus rapide.
+ 3) j'ai commencé à faire ce premier tri, perfectionne le, pour le Vocabulaire minimal, ne retient que les mots principaux de "forth", ceux qui ne peuvent être traduit en d'autres mots "forth". nous appelleront la collection de ces mots le vocabulaire minimal ( il doit être le plus réduit possible) et être écrit en assembleur et avoir l'emprunte la plus faible et la plus rapide. Tu trouvera dans le dossier src un premier jet non vérifié
  4) Les autres mots (vocabulaire usuel et spécifique ) seront obtenus (macro) à partir du vocabulaire minimal. Il seront dans des fichiers spiff interprétés au lancement du programme s'il sont présent sur le disque. Si une pin spécifiée est  à 0 alors les fichiers vocabulaires ne seront pas lu et interprétés, cela sera utilisé pour faire des tests.
  
  5) Je pense ne rien avoir oublié mais je pense que ce cahier des charges initial évoluera au fur et à mesure de la réalisation de ce projet.
