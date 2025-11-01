@@ -1,138 +1,76 @@
 @echo off
-:: =========================================================
-:: build.bat - ESP32-Forth - VERSION 1.6.55
-:: + Recherche xtensa-esp32-elf-ld.exe dans TOUT C:\Espressif
-:: + Utilise le vrai toolchain ESP32
-:: Auteur : GuyTitt + Grok
-:: Date : 01/11/2025
-:: =========================================================
 
-cls
-setlocal EnableDelayedExpansion
+:: =================================================================
+:: 1. GESTION DE LA VERSION DU SCRIPT
+:: =================================================================
+set SCRIPT_VERSION=1.7.1
+echo.
+echo ===============================================================
+echo [INFO] Script de construction build.bat (v%SCRIPT_VERSION%)
+echo ===============================================================
 
-set "BUILD_VERSION=1.6.55"
-set "LOG_DIR=log"
-set "LOG_FILE=%LOG_DIR%\build.log"
-
-if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
-echo. > "%LOG_FILE%"
-
-echo =========================================================
-echo     ESP32-Forth Build System - VERSION %BUILD_VERSION%
-echo     Auteur : GuyTitt + Grok
-echo     Date   : 01/11/2025
-echo     Log : %LOG_FILE%
-echo =========================================================
-
-:: --- VÉRIF IDF ---
+:: =================================================================
+:: 2. VERIFICATION DE L'ENVIRONNEMENT (PAS D'APPEL A export.bat)
+:: =================================================================
 if not defined IDF_PATH (
-    echo [ERREUR] Lance via "ESP-IDF Command Prompt"
-    exit /b 1
-)
-echo === ENV OK : %IDF_PATH%
-
-:: --- TOOLCHAIN AUTO : RECHERCHE EXHAUSTIVE ---
-set "FOUND=0"
-set "LD_PATH="
-
-echo [INFO] Recherche de xtensa-esp32-elf-ld.exe...
-for /r "C:\Espressif" %%f in (xtensa-esp32-elf-ld.exe) do (
-    set "LD_PATH=%%f"
-    set "FOUND=1"
-    echo [OK] xtensa-esp32-elf-ld.exe trouvé : %%f
-    goto :toolchain_found
-)
-
-:toolchain_found
-if "%FOUND%"=="0" (
-    echo [ERREUR] xtensa-esp32-elf-ld.exe introuvable dans C:\Espressif
-    echo Installe le toolchain ESP32 via ESP-IDF Tools Installer
-    pause
-    exit /b 1
-)
-
-:: Extraire le dossier bin
-for %%f in ("%LD_PATH%") do set "TOOLCHAIN_BIN=%%~dpf"
-set "TOOLCHAIN=!TOOLCHAIN_BIN:~0,-1!"
-
-set "AS=%TOOLCHAIN%\bin\xtensa-esp32-elf-as.exe"
-set "LD=%TOOLCHAIN%\bin\xtensa-esp32-elf-ld.exe"
-set "OBJCOPY=%TOOLCHAIN%\bin\xtensa-esp32-elf-objcopy.exe"
-set "ESPTOOL=python %IDF_PATH%\components\esptool_py\esptool\esptool.py"
-
-echo [OK] Toolchain ESP32 : %TOOLCHAIN%
-
-:: --- CHEMINS ---
-set "BUILD_DIR=build"
-set "LINKER=boot\linker.ld"
-set "TARGET_ELF=%BUILD_DIR%\forth.elf"
-set "TARGET_BIN=%BUILD_DIR%\forth.bin"
-set "MAP_FILE=%BUILD_DIR%\forth.map"
-
-:: --- NETTOYAGE ---
-echo === NETTOYAGE ===
-if exist "%BUILD_DIR%" rmdir /s /q "%BUILD_DIR%" >nul && echo [OK] build supprimé
-mkdir "%BUILD_DIR%" >nul && echo [OK] build créé
-
-:: --- ASSEMBLAGE ---
-echo === ASSEMBLAGE ===
-set "obj_list="
-for %%s in (boot\*.s kernel\*.s) do (
-    set "obj=%BUILD_DIR%\%%~ns.o"
-    echo [DEBUG] Assemblage : %%s to !obj!
-    "%AS%" -o "!obj!" "%%s" >> "%LOG_FILE%" 2>&1
-    if errorlevel 1 (
-        echo [ERREUR] %%s
-        goto end
-    ) else (
-        echo [OK] Assemblé : %%s
-    )
-    set "obj_list=!obj_list! "!obj!""
-)
-
-:: --- LINKAGE ---
-echo === LINKAGE ===
-echo "%LD%" -T "%LINKER%" -nostdlib -Map "%MAP_FILE%" -o "%TARGET_ELF%" !obj_list!
-"%LD%" -T "%LINKER%" -nostdlib -Map "%MAP_FILE%" -o "%TARGET_ELF%" !obj_list! >> "%LOG_FILE%" 2>&1
-if errorlevel 1 (
-    echo [ERREUR] Linkage échoué
-    type "%LOG_FILE%"
-    pause
-    goto end
-) else (
-    echo [OK] Linkage réussi
-    echo [INFO] Map généré : %MAP_FILE%
-)
-
-:: --- BIN ---
-echo === BIN ===
-"%OBJCOPY%" -O binary "%TARGET_ELF%" temp.bin && echo [OK] .elf to temp.bin || goto end
-
-echo [DEBUG] elf2image :
-%ESPTOOL% --chip esp32 elf2image --flash_mode=dio --flash_freq=40m --flash_size=4MB -o "%TARGET_BIN%" "%TARGET_ELF%" >> "%LOG_FILE%" 2>&1
-if errorlevel 1 (
-    echo [ERREUR] elf2image échoué
     echo.
-    echo === LOG COMPLET ===
-    type "%LOG_FILE%"
-    pause
-    goto end
-) else (
-    echo [OK] forth.bin généré
+    echo ERREUR: La variable d'environnement IDF_PATH n'est pas definie.
+    echo Veuillez executer ce script a partir de la console "ESP-IDF 5.5 CMD".
+    goto :error_exit
 )
 
-del temp.bin 2>nul
+echo [INFO] Environnement ESP-IDF verifie. IDF_PATH: %IDF_PATH%
 
-echo.
-echo === BUILD RÉUSSI : %TARGET_BIN% ===
-echo [INFO] Map : %MAP_FILE%
-echo [INFO] Log : %LOG_FILE%
-goto end
+:: Si le fichier VERSION.txt existe encore de la version precedente, le supprimer
+if exist VERSION.txt (
+    del VERSION.txt
+    echo [INFO] Suppression de l'ancien fichier VERSION.txt.
+)
 
-:end
+:: =================================================================
+:: 3. COMPILATION
+:: =================================================================
 echo.
-echo =========================================================
-echo     Fin du build - %date% %time%
-echo =========================================================
-endlocal
-:: build.bat - VERSION 1.6.55
+echo Construction du projet pour ESP32-S3...
+idf.py set-target esp32s3
+idf.py fullclean
+idf.py build
+
+if errorlevel 1 (
+    echo.
+    echo ERREUR: La compilation a echoue.
+    goto :error_exit
+)
+
+:: =================================================================
+:: 4. GENERATION DU FIRMWARE (UF2 pour Wokwi)
+:: =================================================================
+echo.
+echo Generation du fichier UF2 pour Wokwi/Televersement...
+idf.py uf2
+
+if errorlevel 1 (
+    echo.
+    echo ERREUR: La generation du fichier UF2 a echoue.
+    goto :error_exit
+)
+
+:: =================================================================
+:: 5. FIN
+:: =================================================================
+echo.
+echo Succes! Le fichier firmware est dans le repertoire build/uf2.bin
+
+:: On utilise une version simple pour le fichier de sortie.
+copy build\uf2.bin firmware_forth.uf2
+
+echo [INFO] Fichier genere: firmware_forth.uf2
+echo ===============================================================
+goto :eof
+
+:error_exit
+echo.
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo Le processus de construction a echoue.
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+:: Fichier: build.bat, Localisation: /build.bat, Version: 1.7.1
