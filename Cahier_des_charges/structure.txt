@@ -1,0 +1,30 @@
+Esp32-Forth/
+├── boot/
+│   ├── boot.s              ← Point d’entrée, init piles, saut vers Forth
+│   └── linker.ld           ← Script de linkage (ROM 0x4000_0000)
+├── kernel/
+│   ├── vm.s                ← Machine virtuelle Forth (NEXT, ENTER, etc.)
+│   ├── primitives.s        ← Mots primitifs en assembleur
+│   ├── dictionary.s        ← Gestion du dictionnaire
+│   ├── uart.s              ← REPL série (UART0 @ 115200)
+│   └── memory.s            ← Accès flash, NVS émulation
+├── forth/
+│   ├── core.fs             ← Mots Forth de base (DUP, +, IF, etc.)
+│   ├── wifi.fs             ← Wi-Fi en pur Forth
+│   └── tasks.fs            ← Multitâche coopératif
+├── tools/
+│   ├── asm.py              ← Script pour convertir .s → .bin
+│   └── flash.py            ← Flashage via esptool.py
+├── Makefile
+└── README.md
+
+---actuel:
+Esp32-Forth/
+├── build.bat          ← v1.5.1
+├── boot/
+│   ├── boot.s         ← v1.0.0
+│   └── linker.ld      ← v1.0.0
+├── kernel/
+│   ├── vm.s           ← v1.0.0
+│   └── uart.s         ← v1.0.0
+└── build/             ← (généré)

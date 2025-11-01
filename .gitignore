@@ -1,0 +1,8 @@
+# Dossiers
+/nppBackup
+/log*.o
+# Fichiers
+*.log
+*.bak
+temp.*
+# fin de .gitignore
