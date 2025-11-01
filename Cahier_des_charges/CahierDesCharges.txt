@@ -33,3 +33,18 @@ Pour cela je souhaite partir de rien. Ce projet a deux objectifs  - pédagogique
  6) Commencons en installant la chaine de production sur windows et en verifiant que l'on sait faire clignoter la led gpio 2 à 1 hz 
  Pour faire l'essai initial utilisons le dossier prerequis 
  7) à moins que tu ais une meilleure méthode à me proposer. je suis preneur de toute idée.
+ 
+Créer un programme  en assembleur esp32 à partir de windows 10
+Ce programme est à terme un interpréteur forth pédagogique
+Seule quelques mots sont ecrits en assembleur,et constituent le vocabulaire minimal
+Les autres mots ( On verra plus tard lesquels ensemble) seront ds macros écrites à partir du
+vocabulaire minimal.
+j'ai déjà travaillé le projet il faut maintenant l'achever
+Tu peux trouver les fichiers dans https://github.com/GuyTitt/Esp32-Forth
+j'ai installé esp-idf-tools-setup-offline-5.5.1 sur mon poste
+J'arrive à assembler mais la suite n'est pas encore opérationnelle 
+La première étape consiste à avoir une toolchain opérationelle produisant un  fichier binaire
+Dans la seconde étape
+Nous utiliserons wokwi gratuit  pour simuler le fonctionnement
+il faut qu'il prenne sur github le fichier programme (tu me donneras la procédure)
+les programmes doivent avoir un numéro de version incrémenté à chaque modification
