@@ -1,8 +1,45 @@
-# Dossiers
-/nppBackup
-/log*.o
-# Fichiers
+# Fichier .gitignore Version: 1.3
+# Objectif : Exclure les fichiers et dossiers temporaires ou générés par l'ESP-IDF/CMake
+#
+# ===============================================
+# Fichiers et dossiers générés par l'ESP-IDF/CMake
+# ===============================================
+# Dossier de construction complet généré par CMake/Ninja
+/build/
+
+# Dossier de logs généré par constructeur.py
+/logs/
+
+# Fichiers de configuration (générés)
+sdkconfig
+sdkconfig.old
+.cmake
+/managed_components/
+
+# Fichiers de mapping et binaires intermédiaires
+*.bin
+*.elf
+*.map
+*.s3
+*.uf2
+
+# ===============================================
+# Fichiers et dossiers IDE/OS/Temporels
+# ===============================================
+# Dossiers temporaires
+/nppBackup/
+/anciens/
+
+# Fichiers de log et de backup
 *.log
 *.bak
+*.tmp
 temp.*
-# fin de .gitignore
+
+# Fichiers de cache et IDE
+.vscode/
+.DS_Store
+*.swp
+*~
+
+# fichier .gitignore Version: 1.3

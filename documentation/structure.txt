@@ -1,0 +1,25 @@
+#structure.txt Version: 1.1
+#Objectif : préciser le contenu des dossiers sur Github
+/
+├── .gitignore [1.3]
+├── README.md [1.0]
+├── outils/
+│   ├── constructeur.bat [3.2] (Script lanceur de construction)
+│   └── constructeur.py [1.21] (Programme de construction du projet)
+├── sources/
+│   ├── Config.ini [1.1] (Configuration globale du projet)
+│   ├── CMakeLists.txt [1.0.1] (Configuration globale du projet)
+│   ├── main/
+│   │   ├── CMakeLists.txt [1.6] (Configuration du composant "main")
+│   │   ├── forth_core.S [2.2] (Noyau Forth en Assembleur)
+│   │   └── main.c [1.5] (Point d'entrée du code C)
+├── logs/
+│   └── construction.log [0.0] (Journal de construction du projet)
+├── documentation/
+│   ├── forth.md [0.0] (Documentation du Forth)
+│   └── CahierdesCharges.txt [0.0] (Description du projet Forth)
+├── cible/
+├── firmware_forth.uf2 [0.0] (Livrable pour Wokwi et flash)
+└── forth_interpreter.bin [0.0] (Binaire brut)
+
+#fichier : documentation/structure.txt, Version: 1.1
