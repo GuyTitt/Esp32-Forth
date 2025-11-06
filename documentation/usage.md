@@ -93,9 +93,38 @@ if ($LASTEXITCODE -eq 0) {
 }
 ```
 
+### **Addendum pour `usage.md`**
+
+## Addendum - Version 1.7
+
+### Changelog :
+- **Version 1.7** : Mise à jour des messages de statut en fonction de la présence des options dans la ligne de commande.
+- **Nouveaux messages** : Si aucun message `--msgOK` ou `--msgNo` n'est spécifié, le programme ne renverra pas de message par défaut concernant l'existence du dossier.
+- **Debug** : Ajout de l'option `--debug`, qui affiche la version du programme ainsi que la ligne de commande lue pour mieux comprendre le traitement en cours.
+
+### Nouvelles options :
+- `--debug` : Affiche la version actuelle du programme et la ligne de commande traitée. Cela est particulièrement utile pour le diagnostic.
+  
+### Exemple d'utilisation :
+```bash
+outils\check_folder.exe "C:\Espressif\frameworks\esp-idf-v5.5.1" --msgOK "ok" --msgNo "pasok" --debug
+```
+###Explication des options :
+
+--msgOK : Définit le message à afficher si le dossier spécifié existe.
+
+--msgNo : Définit le message à afficher si le dossier spécifié n'existe pas.
+
+--debug : Affiche des informations détaillées pour aider à diagnostiquer les problèmes.
+
+###Points importants :
+
+Le programme accepte désormais des chemins avec ou sans les barres obliques \ ou / à la fin.
+
+Les guillemets autour des chemins de dossiers (simples ou doubles) sont automatiquement supprimés avant le traitement.
+
 ## Version du programme
 
-**Version actuelle** : 1.0.1
+**Version actuelle** : 1.7
 ---
-
 Projet Existe_Dossier - usage.md

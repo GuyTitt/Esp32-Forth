@@ -1,26 +1,29 @@
-# structure.txt Version: 1.9
+# structure.txt Version: 2.1M
 
 # Objectif : préciser le contenu des dossiers sur Github
 
 /
 ├── .gitignore [1.3]
 ├── README.md [1.0]
-├── lanceur.cmd [1.9] (Lanceur Universel: détecte pwsh, initialise IDF, puis appelle lanceur.ps1 ou constructeur.bat)
+├── lanceur.cmd [3.6] (Lanceur Universel: détecte pwsh, initialise IDF, puis appelle lanceur.ps1 ou constructeur.bat)
 ├── outils/
 │   ├── constructeur.py [1.0] (Programme de construction principal avec streaming et journalisation)
 │   ├── lanceur.bat [4.0] (Lanceur Batch qui initialise IDF et exécute constructeur.py)
 │   ├── lanceur.ps1 [1.1] (Wrapper qui appelle le constructeur Python en powershell 7)
 │   ├── mkuf2.py [1.0] (Utilitaire Python pour creer le UF2, appelé par constructeur.py)
 │   ├── nettoyage.bat [1.0] (Script de nettoyage simple)
-│   └── requis.bat [1.9] (Liste des fichiers sources critiques)
+│   ├── version_check.bat [1.0] (test des versions) 
+│   ├── check_folder.exe [1.1] (Utilitaire de vérification d'existence de dossier)
+│   └── requis.bat [2.1] (Liste des fichiers sources critiques)
 ├── sources/
-│   ├── config.bat [1.3] (Définit le chemin d'installation de ESP-IDF: IDF_TOOLS_PATH)
+│   ├── config.bat [1.1] (Définit le chemin d'installation de ESP-IDF: IDF_TOOLS_PATH)
 │   ├── config.ini [1.1] (Configuration globale du projet)
 │   ├── CMakeLists.txt [1.0.1] (Configuration globale du projet - NON généré)
 │   ├── main/
 │   │   ├── CMakeLists.txt [1.6] (Configuration du composant "main" - NON généré)
 │   │   ├── forth_core.S [2.2] (Noyau Forth en Assembleur)
 │   │   └── main.c [1.5] (Point d'entrée du code C)
+│   └── build.log [0.0] (Sortie brute de idf.py build)
 ├── build/
 ├── logs/
 │   ├── trace.log [0.0] (Journal de trace du constructeur)
@@ -28,9 +31,10 @@
 ├── documentation/
 │   ├── cahierDesCharges.md [0.0] (Documentation projet)
 │   ├── forth.md [0.0] (Documentation du Forth)
+│   ├── usage.md [1.0.1] (Documentation du exist_folder)
 │   └── structure.txt [1.9] (Description de la structure du dépôt)
 ├── cible/
 ├── firmware_forth.uf2 [0.0] (Livrable pour Wokwi et flash)
 └── forth_interpreter.bin [0.0] (Binaire brut)
 
-#fichier : documentation/structure.txt, Version: 1.9
+#fichier : documentation/structure.txt, Version: 2.1M
