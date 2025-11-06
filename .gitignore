@@ -21,7 +21,7 @@ sdkconfig.old
 *.elf
 *.map
 *.s3
-*.uf2
+
 
 # ===============================================
 # Fichiers et dossiers IDE/OS/Temporels
